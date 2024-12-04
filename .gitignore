@@ -2,3 +2,7 @@
 .DS_Store
 StarWars.People.API/StarWars.People.API/bin/*
 StarWars.People.API/StarWars.People.API/obj/*
+StarWars.Film.API/StarWars.Film.API/bin/*
+StarWars.Film.API/StarWars.Film.API/obj/*
+StarWars.Statistics.API/StarWars.Statistics.API/bin/*
+StarWars.Statistics.API/StarWars.Statistics.API/obj/*
