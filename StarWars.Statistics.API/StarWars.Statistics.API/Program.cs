@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 var redisOptions = new ConfigurationOptions
 {
     EndPoints = { { "redis", 6379 } },
-    //EndPoints = { { "localhost", 5001 } }, // For Local Redis enviroment, code not needed if implement env variables
     AbortOnConnectFail = false,
     DefaultDatabase = 0,
     ConnectTimeout = 5000,
@@ -20,31 +19,16 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Conn
 builder.Services.AddSingleton<IQueueService, RedisQueueService>();
 builder.Services.AddSingleton<MetricsProcessor>();
 builder.Services.AddHostedService<MetricsBackgroundService>();
-
-builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAngularApp",
-            builder => builder.WithOrigins("http://localhost:4200") // Angular app URL
-                .AllowAnyHeader()
-                .AllowAnyMethod());
-
-        options.AddPolicy("AllowAll",
-            builder => builder.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod());
-    });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
-app.UseCors("AllowAngularApp");
-app.UseCors("AllowAll");
+app.UseCors(options => { options.WithOrigins("http://localhost:5004"); }); // Just in case we want to create a view in the frontend to get data
 
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-// }
+// Allow swagger for this API
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 
 app.MapPost("/capture", async (IQueueService queueService, MetricInput input) =>

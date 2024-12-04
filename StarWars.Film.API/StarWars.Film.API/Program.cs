@@ -5,7 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 var redisOptions = new ConfigurationOptions
 {
     EndPoints = { { "redis", 6379 } },
-    // EndPoints = { { "localhost", 5001 } }, // For local run only
     AbortOnConnectFail = false,
     DefaultDatabase = 0,
     ConnectTimeout = 5000,
@@ -16,24 +15,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisOptions));
 builder.Services.AddHttpClient<FilmService>();
-
-builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAngularApp",
-            builder => builder.WithOrigins("http://localhost:4200") // Angular app URL
-                .AllowAnyHeader()
-                .AllowAnyMethod());
-
-        options.AddPolicy("AllowAll",
-            builder => builder.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod());
-    });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
-app.UseCors("AllowAngularApp");
-app.UseCors("AllowAll");
+app.UseCors(options => { options.WithOrigins("http://localhost:5004"); });
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

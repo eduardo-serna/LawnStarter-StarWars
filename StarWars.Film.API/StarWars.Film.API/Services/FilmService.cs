@@ -48,7 +48,7 @@ public class FilmService
                         Encoding.UTF8,
                         "application/json");
                     await _httpClient.PostAsync("http://host.docker.internal:5005/capture", jsonContent);
-                    // await _httpClient.PostAsync("http://localhost:5005/capture", jsonContent); // DEV Only
+                    
                     sw.Stop(); // stop watch
 
                     var jsonResponse = await response.Content.ReadAsStringAsync();

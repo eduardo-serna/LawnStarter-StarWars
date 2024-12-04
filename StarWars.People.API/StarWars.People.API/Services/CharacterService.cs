@@ -49,7 +49,6 @@ public class CharacterService
                     Encoding.UTF8,
                     "application/json");
                     await _httpClient.PostAsync("http://host.docker.internal:5005/capture", jsonContent);
-                    // await _httpClient.PostAsync("http://localhost:5005/capture", jsonContent); // DEV env only
                     
                     sw.Stop(); // stop watch
 
