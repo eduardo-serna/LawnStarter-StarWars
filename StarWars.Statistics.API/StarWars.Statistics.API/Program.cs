@@ -55,6 +55,7 @@ app.MapPost("/capture", async (IQueueService queueService, MetricInput input) =>
     return Results.Ok(new { Message = "Metric captured successfully" });
 });
 
+// Return count and average run time on ms
 app.MapGet("/average", (MetricsProcessor processor) =>
 {
     return Results.Ok(processor.GetMetrics());
