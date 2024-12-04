@@ -1,0 +1,20 @@
+<div class="results">
+    <div class="results-container">
+        <p>Results</p>
+        <hr class="solid">
+        <ul p *ngIf="isVisible">
+            <li *ngFor="let item of results">
+                <div>
+                    {{ item.name }}
+                    <button class="details-button">SEARCH</button>
+                    <hr class="solid">
+                </div>
+            </li>
+        </ul>
+        <p class="no-results" *ngIf="!isVisible">
+            There are zero matches. <br>
+            Use the form to search for People or Movies.
+        </p>
+    </div>
+</div>
+

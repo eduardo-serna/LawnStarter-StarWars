@@ -1,0 +1,39 @@
+/* Add a black background color to the top navigation */
+.SWStarter {
+    font-family: 'Montserrat', sans-serif;;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0fa53a;
+}
+
+header {
+    height: 50px;
+    text-align: center;
+    margin: 0 0 30px;
+    padding-top: 20px;
+    box-shadow: 0 5px 0 0 #dcdcdc4d;
+    background-color: #ffffff;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+  
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    align-items: center;
+}
+
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+
+td {
+    vertical-align: top;
+}

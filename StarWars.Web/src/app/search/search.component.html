@@ -1,0 +1,24 @@
+<div class="search-container">
+    <table>
+        <tr>
+            <td>
+                <p>What are you searching for?</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    <input type="radio" name="search-criteria" value="people" #peopleCheckbox checked> People
+                </label>
+                <label>
+                    <input type="radio" name="search-criteria" value="movie"> Movies
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input class="rectangle" type="text" placeholder="Start typing..." (input)="onSearch($event)" name="search">
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,48 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    ports:
+      - "5001:6379"
+
+  starwars_people_api:
+    build:
+      context: ./StarWars.People.API
+      dockerfile: Dockerfile
+    container_name: starwarspeople-container
+    ports:
+      - "5002:5002"
+    environment:
+      - RedisHost=redis
+      - RedisPort=6379
+    depends_on:
+      - redis
+
+  starwars_film_api:
+    build:
+      context: ./StarWars.Film.API
+      dockerfile: Dockerfile
+    container_name: starwarsfilm-container
+    ports:
+      - "5003:5003"
+    environment:
+      - RedisHost=redis
+      - RedisPort=6379
+    depends_on:
+      - redis
+
+  starwars_ui:
+    build:
+      context: ./StarWars.Web
+      dockerfile: Dockerfile
+    container_name: starwarsweb-container
+    ports:
+      - "5004:5004"
+
+  starwars_statistics:
+    build:
+      context: ./StarWars.Statistics.API
+      dockerfile: Dockerfile
+    container_name: starwarsstatistics-container
+    ports:
+      - "5005:5005"
