@@ -1,2 +1,4 @@
 
 .DS_Store
+StarWars.People.API/StarWars.People.API/bin/*
+StarWars.People.API/StarWars.People.API/obj/*

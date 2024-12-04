@@ -21,6 +21,13 @@ var app = builder.Build();
 
 app.UseCors(options => { options.WithOrigins("http://localhost:5004"); });
 
+// Load heavy request to cache when API init to reduce the response time in the front end.
+using (var scope = app.Services.CreateScope())
+{
+    var filmService = scope.ServiceProvider.GetRequiredService<FilmService>();
+    await filmService.GetFilmsAsync();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
