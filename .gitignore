@@ -6,3 +6,4 @@ StarWars.Film.API/StarWars.Film.API/bin/*
 StarWars.Film.API/StarWars.Film.API/obj/*
 StarWars.Statistics.API/StarWars.Statistics.API/bin/*
 StarWars.Statistics.API/StarWars.Statistics.API/obj/*
+node_modules/*

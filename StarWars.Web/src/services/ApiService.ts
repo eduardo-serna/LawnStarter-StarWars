@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, map, Observable, of, tap } from "rxjs";
+import { BehaviorSubject, map, Observable, of, tap, retry, catchError} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -25,12 +25,17 @@ export class ApiService {
     }
 
     return this.http.get<any[]>(`${apiUrl}`).pipe(
+        retry(2),
         map((response) =>  response.map((item) => ({
             name: item.name,
             resources: item.films
           }))
         ),
-        tap((data) => (this.cacheCharacters = data)) // Cache the data
+        catchError(error => {
+          console.error('Error fetching film data:', error);
+          return of([]); 
+        }),
+        tap((data) => (this.cacheData(data, true))) // Cache the data
       );
   }
 
@@ -42,13 +47,29 @@ export class ApiService {
     }
 
     return this.http.get<any[]>(`${apiUrl}`).pipe(
+        retry(2),
         map((response) =>  response.map((item) => ({
             name: item.title,
             resources: item.films
           }))
         ),
-        tap((data) => (this.cacheFilms = data)) // Cache the data
+        catchError(error => {
+          console.error('Error fetching film data:', error);
+          return of([]); 
+        }),
+        tap((data) => (this.cacheData(data, false))) // Cache the data
       );
+  }
+
+  cacheData(data: { name: string; resources: string; }[] | null, isPeople: boolean) {
+    if(data && data?.length > 0) {
+      if(isPeople) {
+        this.cacheCharacters = data
+      }
+      else {
+        this.cacheFilms = data;
+      }
+    }
   }
 
   /**
